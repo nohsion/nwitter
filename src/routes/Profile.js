@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 import { useHistory } from "react-router"
 
 
-const Profile = ({ userObj }) => {
+const Profile = ({ userObj, refreshUser }) => {
     const history = useHistory()
     const [newDisplayName, setNewDisplayName] = useState(userObj.displayName)
 
@@ -19,9 +19,15 @@ const Profile = ({ userObj }) => {
         setNewDisplayName(value)
     }
 
-    const onSubmit = (event) => {
+    const onSubmit = async (event) => {
         event.preventDefault()
+        if (userObj.displayName !== newDisplayName) {
+            await userObj.updateProfile({ displayName: newDisplayName })
+            refreshUser()
+        }
+
     }
+
     return (
         <>
             <form onSubmit={onSubmit}>
