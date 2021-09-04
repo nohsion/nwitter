@@ -1,11 +1,10 @@
-import { concatSeries } from "async"
 import { dbService, storageService } from "fbase"
 import { useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons"
 
 
-const Nweet = ({ nweetObj, isOwner }) => {
+const Nweet = ({ nweetObj, isOwner, userObj }) => {
     const [editing, setEditing] = useState(false)
     const [newNweet, setNewNweet] = useState(nweetObj.text)
 
@@ -57,6 +56,10 @@ const Nweet = ({ nweetObj, isOwner }) => {
                     <h4>{nweetObj.text}</h4>
                     {nweetObj.attachmentUrl && (
                         <img src={nweetObj.attachmentUrl} width="50px" height="50px" />
+                    )}
+                    <br></br>
+                    {nweetObj.userId && (
+                        <span style={{fontWeight: 600}}>{nweetObj.userId}</span>
                     )}
                     {isOwner && (
                         <div className="nweet__actions">
